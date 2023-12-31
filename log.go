@@ -81,3 +81,9 @@ func Fatalf(s string, a ...any) {
 func Fatal(s string, a ...any) {
 	origlog.Fatalf(s, a...)
 }
+
+// register a variable name from a subsystem
+// this is used for custom log flags
+func Register(subsystem string, name string) {
+	Info("log.Register() got subsystem", subsystem, "with name =", name)
+}
