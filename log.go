@@ -58,12 +58,12 @@ func Get(flag string) bool {
 // a simple way turn logging messages on and off
 func Log(b bool, a ...any) {
 	if ! b { return }
-	golanglog.Println(a...)
+	origlog.Println(a...)
 }
 
 func Logf(b bool, s string, a ...any) {
 	if ! b { return }
-	golanglog.Printf(s, a...)
+	origlog.Printf(s, a...)
 }
 
 func Println(a ...any) {
