@@ -5,7 +5,7 @@ import 	(
 	origlog "log"
 )
 
-var SPEW bool = true
+var SPEW bool = false
 var INFO bool = true
 var WARN bool = true
 var ERROR bool = true
