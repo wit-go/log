@@ -1,61 +1,25 @@
 package log
 
 import 	(
-	"errors"
 	origlog "log"
 )
 
-var INFO bool = true
-var WARN bool = true
-var ERROR bool = true
+/*
 
-var VERBOSE bool = false
-var SPEW bool = false
+a simple way turn logging messages on and off. The gui config
+window will let you enable & disable logging while your app is
+running.
 
-func All(b bool) {
-	Set("SPEW", b)
-	Set("INFO", b)
-	Set("WARN", b)
-	Set("ERROR", b)
-	Set("VERBOSE", b)
-}
+Example:
 
-func Set(flag string, b bool) {
-	switch flag {
-	case "INFO":
-		INFO = b
-	case "WARN":
-		WARN = b
-	case "SPEW":
-		SPEW = b
-	case "ERROR":
-		ERROR = b
-	case "VERBOSE":
-		VERBOSE = b
-	default:
-		Error(errors.New("unknown flag"), "Flag name sent:", flag)
-	}
-}
+	log.Log(NETWARN, "socket connection failed to 127.0.0.1:8080")
 
-func Get(flag string) bool {
-	switch flag {
-	case "INFO":
-		return INFO
-	case "WARN":
-		return WARN
-	case "SPEW":
-		return SPEW
-	case "ERROR":
-		return ERROR
-	case "VERBOSE":
-		return VERBOSE
-	default:
-		Error(errors.New("unknown flag"), "Flag name sent:", flag)
-	}
-	return false
-}
+In your package, register NETWARN:
 
-// a simple way turn logging messages on and off
+	var NETWARN bool
+	log.Register("myNetPkg", "NETWARN", &NETWARN)
+*/
+
 func Log(b bool, a ...any) {
 	if ! b { return }
 	origlog.Println(a...)
@@ -64,26 +28,4 @@ func Log(b bool, a ...any) {
 func Logf(b bool, s string, a ...any) {
 	if ! b { return }
 	origlog.Printf(s, a...)
-}
-
-func Println(a ...any) {
-	origlog.Println(a...)
-}
-
-func Printf(s string, a ...any) {
-	origlog.Printf(s, a...)
-}
-
-func Fatalf(s string, a ...any) {
-	origlog.Fatalf(s, a...)
-}
-
-func Fatal(s string, a ...any) {
-	origlog.Fatalf(s, a...)
-}
-
-// register a variable name from a subsystem
-// this is used for custom log flags
-func Register(subsystem string, name string) {
-	Info("log.Register() got subsystem", subsystem, "with name =", name)
 }
