@@ -9,12 +9,29 @@ var WARN bool = true
 var ERROR bool = true
 
 var VERBOSE bool = false
-var SPEW bool = false
+// var SPEW bool = false
+
+var SPEW logFlag
+
+type logFlag struct {
+	b	bool
+	name	string
+	pkg	string
+	desc	string
+}
 
 var registered map[string][]string
 
 func init() {
 	registered = make(map[string][]string)
+
+	SPEW.b = false
+	SPEW.name = "SPEW"
+	SPEW.pkg = "log"
+	SPEW.desc = "Enable log.Spew()"
+
+	// register the default flags used by this log package
+	registered["log"] = []string{"SPEW","INFO", "WARN", "ERROR", "VERBOSE"}
 }
 
 func All(b bool) {
@@ -25,8 +42,7 @@ func All(b bool) {
 	Set("VERBOSE", b)
 }
 
-func ListAll() map[string][]string {
-	registered["all"] = []string{"SPEW","INFO", "WARN", "ERROR", "VERBOSE"}
+func ListFlags() map[string][]string {
 	return registered
 }
 
@@ -37,7 +53,7 @@ func Set(flag string, b bool) {
 	case "WARN":
 		WARN = b
 	case "SPEW":
-		SPEW = b
+		SPEW.b = b
 	case "ERROR":
 		ERROR = b
 	case "VERBOSE":
@@ -54,7 +70,7 @@ func Get(flag string) bool {
 	case "WARN":
 		return WARN
 	case "SPEW":
-		return SPEW
+		return SPEW.b
 	case "ERROR":
 		return ERROR
 	case "VERBOSE":
