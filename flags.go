@@ -41,6 +41,11 @@ func All(b bool) {
 	Set("WARN", b)
 	Set("ERROR", b)
 	Set("VERBOSE", b)
+	for _, f := range flags {
+		Warn("All() Setting Name =", f.Name, "Subsystem =", f.Subsystem, "to b =", b, "vs", f.B)
+		f.B = b
+		Warn("All() f.B is now", f.B)
+	}
 }
 
 func ListFlags() map[string][]string {
@@ -88,6 +93,7 @@ func Get(flag string) bool {
 }
 
 // register a variable name from a subsystem
+// inspired by Alex Flint
 func (f *LogFlag) Register() {
 	Info("log.Register() ", f)
 	flags = append(flags,f)
