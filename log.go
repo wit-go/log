@@ -20,12 +20,41 @@ In your package, register NETWARN:
 	log.Register("myNetPkg", "NETWARN", &NETWARN)
 */
 
-func Log(b bool, a ...any) {
-	if ! b { return }
-	origlog.Println(a...)
+func Log(x any, a ...any) {
+	if x == nil { return }
+	switch x.(type) {
+	case bool:
+		if ! x.(bool) {
+			return
+		}
+		origlog.Println(a...)
+	case LogFlag:
+		var f LogFlag
+		f = x.(LogFlag)
+		if ! f.B {
+			return
+		}
+		a = append([]any{f.Subsystem}, a...)
+		origlog.Println(a...)
+	default:
+		a = append([]any{x}, a...)
+		origlog.Println(a...)
+	}
 }
 
-func Logf(b bool, s string, a ...any) {
-	if ! b { return }
+func Logf(x any, s string, a ...any) {
+	if x == nil { return }
+	switch x.(type) {
+	case bool:
+		if ! x.(bool) {
+			return
+		}
+	case LogFlag:
+		var f LogFlag
+		f = x.(LogFlag)
+		if ! f.B {
+			return
+		}
+	}
 	origlog.Printf(s, a...)
 }

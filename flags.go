@@ -11,24 +11,25 @@ var ERROR bool = true
 var VERBOSE bool = false
 // var SPEW bool = false
 
-var SPEW logFlag
+var SPEW LogFlag
 
-type logFlag struct {
-	b	bool
-	name	string
-	pkg	string
-	desc	string
+type LogFlag struct {
+	B	bool
+	Name	string
+	Subsystem	string
+	Desc	string
 }
 
 var registered map[string][]string
+var flags []*LogFlag
 
 func init() {
 	registered = make(map[string][]string)
 
-	SPEW.b = false
-	SPEW.name = "SPEW"
-	SPEW.pkg = "log"
-	SPEW.desc = "Enable log.Spew()"
+	SPEW.B = false
+	SPEW.Name = "SPEW"
+	SPEW.Subsystem = "log"
+	SPEW.Desc = "Enable log.Spew()"
 
 	// register the default flags used by this log package
 	registered["log"] = []string{"SPEW","INFO", "WARN", "ERROR", "VERBOSE"}
@@ -43,6 +44,11 @@ func All(b bool) {
 }
 
 func ListFlags() map[string][]string {
+	Info("ListFlags() registered =", registered)
+	for _, f := range flags {
+		Info("ListFlags() flag B =", f.B, "Name =", f.Name, "Subsystem =", f.Subsystem, "Description:", f.Desc)
+	}
+
 	return registered
 }
 
@@ -53,7 +59,7 @@ func Set(flag string, b bool) {
 	case "WARN":
 		WARN = b
 	case "SPEW":
-		SPEW.b = b
+		SPEW.B = b
 	case "ERROR":
 		ERROR = b
 	case "VERBOSE":
@@ -70,7 +76,7 @@ func Get(flag string) bool {
 	case "WARN":
 		return WARN
 	case "SPEW":
-		return SPEW.b
+		return SPEW.B
 	case "ERROR":
 		return ERROR
 	case "VERBOSE":
@@ -79,6 +85,12 @@ func Get(flag string) bool {
 		Error(errors.New("unknown flag"), "Flag name sent:", flag)
 	}
 	return false
+}
+
+// register a variable name from a subsystem
+func (f *LogFlag) Register() {
+	Info("log.Register() ", f)
+	flags = append(flags,f)
 }
 
 // register a variable name from a subsystem

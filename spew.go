@@ -6,7 +6,7 @@ import 	(
 )
 
 func Spew(b any, a ...any) {
-	if ! SPEW.b { return }
+	if ! SPEW.B { return }
 
 	switch b.(type) {
 	case bool:
@@ -14,10 +14,10 @@ func Spew(b any, a ...any) {
 			return
 		}
 		origlog.Println("SPEW:", spew.Sdump(a...))
-	case logFlag:
-		var f logFlag
-		f = b.(logFlag)
-		if ! f.b {
+	case LogFlag:
+		var f LogFlag
+		f = b.(LogFlag)
+		if ! f.B {
 			return
 		}
 		origlog.Println("SPEW:", spew.Sdump(a...))
