@@ -1,5 +1,9 @@
 package log
 
+/*
+// disable this until it hopefully is adopted by the go lang developers
+// TODO: clean alex's dependancies
+
 import (
 	arg "github.com/alexflint/go-arg"
 )
@@ -26,3 +30,4 @@ func init() {
 func ArgDebug() bool {
 	return argLog.LogDebug
 }
+*/

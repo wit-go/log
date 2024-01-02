@@ -2,7 +2,7 @@ package log
 
 import 	(
 	origlog "log"
-	"github.com/davecgh/go-spew/spew"
+	"go.wit.com/spew"
 )
 
 func Spew(b any, a ...any) {
