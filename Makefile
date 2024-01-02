@@ -8,7 +8,7 @@ github:
 	git push github devel
 	git push github --tags
 	@echo
-	@echo check https://github.com/wit-go/gui
+	@echo check https://github.com/wit-go/log
 	@echo
 
 init-github:
