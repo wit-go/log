@@ -42,16 +42,18 @@ func All(b bool) {
 	Set("ERROR", b)
 	Set("VERBOSE", b)
 	for _, f := range flags {
-		Warn("All() Setting Name =", f.Name, "Subsystem =", f.Subsystem, "to b =", b, "vs", f.B)
+		Warn("All() ", "(" + f.Subsystem + ")", f.Name, "=", f.B, ":", f.Desc)
 		f.B = b
 		Warn("All() f.B is now", f.B)
 	}
 }
 
+// this bypasses all checks and _always_ logs the info to STDOUT
+// is this a bad idea? Probably not....
 func ListFlags() map[string][]string {
-	Info("ListFlags() registered =", registered)
+	Log(true, "ListFlags() registered =", registered)
 	for _, f := range flags {
-		Info("ListFlags() flag B =", f.B, "Name =", f.Name, "Subsystem =", f.Subsystem, "Description:", f.Desc)
+		Log(true, "ListFlags() ", "(" + f.Subsystem + ")", f.Name, "=", f.B, ":", f.Desc)
 	}
 
 	return registered
