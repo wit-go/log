@@ -5,6 +5,6 @@ import 	(
 )
 
 func Warn(a ...any) {
-	if ! WARN { return }
+	if ! WARN.B { return }
 	origlog.Println(a...)
 }

@@ -5,6 +5,7 @@ import 	(
 )
 
 func Error(err error, a ...any) {
+	if ! ERROR.B { return }
 	origlog.Println("Error:", err)
 	origlog.Println(a...)
 }

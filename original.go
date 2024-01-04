@@ -18,15 +18,19 @@ package log
 	so this package appears to work exactly like the original ones
 */
 
+// TODO: fill in the other functions from "log". Is there a way to automagically do that?
+
 import 	(
 	origlog "log"
 )
 
 func Println(a ...any) {
+	if ! PRINTLN.B { return }
 	origlog.Println(a...)
 }
 
 func Printf(s string, a ...any) {
+	if ! PRINTLN.B { return }
 	origlog.Printf(s, a...)
 }
 
