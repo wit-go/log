@@ -20,6 +20,7 @@ var flagsMutex sync.Mutex
 
 type LogFlag struct {
 	B	bool
+	Default	bool	// set at the time of Registration()
 	Name	string
 	Subsystem	string
 	Desc	string
@@ -74,6 +75,14 @@ func SetAll(b bool) {
 	}
 }
 
+// set all the flags
+func SetDefaults() {
+	flagsMutex.Lock()
+	defer flagsMutex.Unlock()
+	for _, f := range flags {
+		f.B = f.Default
+	}
+}
 
 // this bypasses all checks and _always_ logs the info to STDOUT
 // is this a bad idea? Probably not....
@@ -103,10 +112,12 @@ func ProcessFlags(callback func(*LogFlag)) {
 
 // register a variable name from a subsystem
 // inspired by Alex Flint
+// set the Default value at the time of registration
 func (f *LogFlag) Register() {
 	flagsMutex.Lock()
 	defer flagsMutex.Unlock()
 	Info("log.Register() ", f)
+	f.Default = f.B
 	flags = append(flags,f)
 }
 
