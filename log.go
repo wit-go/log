@@ -34,7 +34,7 @@ func Log(x any, a ...any) {
 		if ! f.B {
 			return
 		}
-		a = append([]any{f.Subsystem}, a...)
+		a = append([]any{f.Short}, a...)
 		origlog.Println(a...)
 	default:
 		a = append([]any{x}, a...)

@@ -120,6 +120,9 @@ func (f *LogFlag) Register() {
 	defer flagsMutex.Unlock()
 	Info("log.Register() ", f)
 	f.Default = f.B
+	if f.Short == "" {
+		f.Short = f.Subsystem
+	}
 	flags = append(flags,f)
 }
 
