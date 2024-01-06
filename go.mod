@@ -2,4 +2,4 @@ module go.wit.com/log
 
 go 1.21.4
 
-require github.com/davecgh/go-spew v1.1.1
+require go.wit.com/spew v0.0.0-20240101141411-c7b8e91573c9

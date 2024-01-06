@@ -22,7 +22,9 @@ type LogFlag struct {
 	B	bool
 	Default	bool	// set at the time of Registration()
 	Name	string
-	Subsystem	string
+	// TODO: figure out what package is sending the Registration
+	Subsystem	string // probably should just be forced to be the package name
+	Short	string	// string actually printed on each line
 	Desc	string
 }
 
@@ -132,11 +134,11 @@ func (f *LogFlag) Set(b bool) {
 func Set(subsystem string, name string, b bool) {
 	flagsMutex.Lock()
 	defer flagsMutex.Unlock()
-	Info("Set() TODO find var:", "(" + subsystem + ")", name, "=", b)
+	Verbose("log.Set() TODO find var:", "(" + subsystem + ")", name, "=", b)
 	for _, f := range flags {
-		Log(true, "Set() ", "(" + f.Subsystem + ")", f.Name, "=", f.B, ":", f.Desc)
+		Verbose("log.Set() ", "(" + f.Subsystem + ")", f.Name, "=", f.B, ":", f.Desc)
 		if (subsystem == f.Subsystem) && (name == f.Name) {
-			Log(true, "Set() FOUND ", f)
+			Verbose("log.Set() FOUND ", f)
 			f.B = b
 			return
 		}
@@ -147,11 +149,11 @@ func Set(subsystem string, name string, b bool) {
 func Get(subsystem string, name string) bool {
 	flagsMutex.Lock()
 	defer flagsMutex.Unlock()
-	Info("Get() TODO find var:", "(" + subsystem + ")", name)
+	Verbose("log.Get() TODO find var:", "(" + subsystem + ")", name)
 	for _, f := range flags {
-		Log(true, "Get() ", "(" + f.Subsystem + ")", f.Name, "=", f.B, ":", f.Desc)
+		Verbose("log.Get() ", "(" + f.Subsystem + ")", f.Name, "=", f.B, ":", f.Desc)
 		if (subsystem == f.Subsystem) && (name == f.Name) {
-			Log(true, "Get() FOUND ", f)
+			Verbose("log.Get() FOUND ", f)
 			return f.B
 		}
 	}
