@@ -16,45 +16,25 @@ Example:
 
 In your package, register NETWARN:
 
-	var NETWARN bool
-	log.Register("myNetPkg", "NETWARN", &NETWARN)
+	var NETWARN *log.LogFlag
+	NETWARN = log.NewFlag("NETWARN", true, "go.wit.com/log", "log", "network warnings!")
+
 */
 
-func Log(x any, a ...any) {
-	if x == nil { return }
-	switch x.(type) {
-	case bool:
-		if ! x.(bool) {
-			return
-		}
+func Log(f *LogFlag, a ...any) {
+	if ! f.Ok() { 
+		// if the flag is NULL, notify the user they didn't initialize the flag
+		a = append([]any{"FLAG = NULL"}, a...)
 		origlog.Println(a...)
-	case LogFlag:
-		var f LogFlag
-		f = x.(LogFlag)
-		if ! f.B {
-			return
-		}
-		a = append([]any{f.Short}, a...)
-		origlog.Println(a...)
-	default:
-		a = append([]any{x}, a...)
-		origlog.Println(a...)
+		return
 	}
+	if ! f.Get() { return }
+	a = append([]any{f.short}, a...)
+	origlog.Println(a...)
 }
 
-func Logf(x any, s string, a ...any) {
-	if x == nil { return }
-	switch x.(type) {
-	case bool:
-		if ! x.(bool) {
-			return
-		}
-	case LogFlag:
-		var f LogFlag
-		f = x.(LogFlag)
-		if ! f.B {
-			return
-		}
-	}
+func Logf(f *LogFlag, s string, a ...any) {
+	if ! f.Get() { return }
+	s = f.short + " " + s
 	origlog.Printf(s, a...)
 }

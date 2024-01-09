@@ -5,6 +5,7 @@ import 	(
 )
 
 func Verbose(a ...any) {
-	if ! VERBOSE.B { return }
+	if ! VERBOSE.Ok() { return }
+	if ! VERBOSE.b { return }
 	golanglog.Println(a...)
 }
